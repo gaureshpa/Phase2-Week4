@@ -1,0 +1,19 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Local/tool-specific files
+.agents/
+.claude/
+.cursor/
+.devin/
+
+# Local data
+data/
