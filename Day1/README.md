@@ -154,3 +154,11 @@ Requests without a valid token returns:
     "error": "Authentication required"
 }
 ```
+
+## Build
+
+Compile the Typescript project:
+
+```bash
+npm run build
+```
