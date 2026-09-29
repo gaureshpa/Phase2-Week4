@@ -1,0 +1,58 @@
+[
+  {
+    "id": "schema.public",
+    "label": "Create schema \"public\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres"
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "Create schema \"public\"",
+        "sql": "CREATE SCHEMA IF NOT EXISTS \"public\"",
+        "params": []
+      }
+    ],
+    "postcheck": []
+  },
+  {
+    "id": "table.tickets",
+    "label": "Create table \"tickets\"",
+    "summary": "Creates table \"tickets\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "tickets"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"tickets\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"tickets\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"tickets\"",
+        "sql": "CREATE TABLE \"public\".\"tickets\" (\n  \"assignee\" character varying(100),\n  \"description\" text NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"priority\" character varying(20) NOT NULL,\n  \"status\" character varying(20) NOT NULL,\n  \"title\" character varying(255) NOT NULL,\n  CONSTRAINT \"tickets_pkey\" PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"tickets\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"tickets\""
+        ]
+      }
+    ]
+  }
+]
