@@ -1,0 +1,26 @@
+// use prisma-8
+// Contract inferred from the live database schema. Edit as needed, then run `prisma contract emit`.
+
+model Tickets {
+  id            Int           @id(map: "tickets_pkey") @default(autoincrement())
+  title         String
+  description   String
+  priority      String
+  status        String
+  customerId    Int           @map("customer_id")
+  assigneeId    Int?          @map("assignee_id")
+  createdAt     DateTime      @default(now()) @map("created_at")
+
+  @@map("tickets")
+}
+
+model Users {
+  id            Int           @id(map: "users_pkey") @default(autoincrement())
+  name          String        
+  email         String        @unique
+  passwordHash  String        @map("password_hash")
+  role          String        @default("CUSTOMER")
+  createdAt     DateTime      @default(now()) @map("created_at")
+
+  @@map("users")
+}
